@@ -54,6 +54,31 @@ Extraction uses `ExtensionSidebarPane.onShown`/`onHidden` events (supported sinc
 - The **Copy** button does a fresh `eval()` to get the absolute latest text (handles DOM mutations since selection).
 - Open the **Browser Console** (`Ctrl+Shift+J`) to see debug output: `YYYY-MM-DD HH:mm:ss [Copy innerText] selection changed, extracting innerText`
 
+## Packaging for AMO submission
+
+### Prerequisites
+
+Install [web-ext](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/):
+
+```bash
+npm install -g web-ext
+```
+
+### Build
+
+```bash
+cd extension
+web-ext build
+```
+
+Output is written to `web-ext-artifacts/<name>-<version>.zip` — upload this file to [addons.mozilla.org](https://addons.mozilla.org).
+
+### Validate locally
+
+```bash
+web-ext lint
+```
+
 ## License
 
 MIT
