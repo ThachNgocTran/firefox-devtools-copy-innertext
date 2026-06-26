@@ -18,6 +18,18 @@ Adds an **"innerText"** tab to the Inspector sidebar showing the rendered text o
 
 The display updates automatically as you select different nodes.
 
+## Use Cases
+
+**Copy a list of search results from Amazon (or any shopping site).** After
+searching for a product, right-click the results list → **Inspect**. Use the
+DevTools element picker to find the deepest DOM node that covers exactly the
+products you see (the blue highlight overlay makes this easy). Switch to the
+**"innerText"** tab in the right sidebar — the rendered text of every visible
+product is captured instantly. Click **Copy innerText** to paste elsewhere.
+
+**Extract data from tables, error logs, code blocks, or any rendered content**
+that is tedious or error-prone to select manually with the mouse.
+
 ## Files
 
 ```
