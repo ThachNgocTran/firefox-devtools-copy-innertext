@@ -44,4 +44,9 @@ Extraction uses `ExtensionSidebarPane.onShown`/`onHidden` events (supported sinc
 
 ## License
 
-MPL-2.0
+MIT
+
+## Tested on
+
+- Windows 10 x64
+- Firefox 152 x64
