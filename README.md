@@ -1,4 +1,4 @@
-# Copy innerText — Firefox DevTools Extension
+# Copy DOM innerText — Firefox DevTools Extension
 
 Adds an **"innerText"** tab to the Inspector sidebar showing the rendered text of the currently selected DOM node. Click **Copy innerText** to copy it to clipboard.
 

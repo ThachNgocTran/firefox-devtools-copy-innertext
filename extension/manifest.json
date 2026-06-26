@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Copy innerText",
+  "name": "Copy DOM innerText",
   "version": "1.0",
   "description": "Copy the rendered innerText of a selected DOM node from the Inspector sidebar",
   "icons": {
