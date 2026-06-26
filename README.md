@@ -30,6 +30,11 @@ product is captured instantly. Click **Copy innerText** to paste elsewhere.
 **Extract data from tables, error logs, code blocks, or any rendered content**
 that is tedious or error-prone to select manually with the mouse.
 
+**Extract a list of job postings.** When browsing job boards, inspect the
+container holding the job listings, use the extension to capture the rendered
+list, then paste it into an LLM (e.g., Gemini) to ask which position best suits
+you — no need to click each posting individually.
+
 ## Files
 
 ```
