@@ -16,7 +16,7 @@ Adds an **"innerText"** tab to the Inspector sidebar showing the rendered text o
 4. See the rendered text of the selected node
 5. Click **Copy innerText** to copy it to clipboard
 
-The display updates automatically as you select different nodes. See the [Open Issues](#open-issues) section for known limitations.
+The display updates automatically as you select different nodes.
 
 ## Files
 
@@ -24,32 +24,23 @@ The display updates automatically as you select different nodes. See the [Open I
 extension/
 ├── manifest.json         # Extension manifest (MV2)
 ├── devtools-page.html    # DevTools page entry point
-├── devtools.js           # Creates sidebar pane, extracts $0.innerText
+├── devtools.js           # Creates sidebar pane, extracts $0.innerText (skipped when tab hidden)
 ├── pane.html             # Sidebar pane UI
 ├── pane.js               # Display update, clipboard copy, visibility detection
 └── icons/
     └── icon.svg          # Extension icon
 ```
 
-## Open Issues
+## Performance
 
-### Extraction runs on every node click regardless of active sidebar tab
-
-`devtools.js` listens to `onSelectionChanged` and evaluates `$0.innerText` on **every** node click in the DOM tree, regardless of whether the "innerText" sidebar tab is currently active. The evaluation is a layout-triggering read (`innerText` forces style recalc on the inspected page).
-
-**Attempted fix**: We tried to skip extraction when the tab is hidden by:
-1. Using `ExtensionSidebarPane.onShown`/`onHidden` events — these are **not supported** on `ExtensionSidebarPane` in Firefox (only on `ExtensionPanel`).
-2. Having `pane.js` poll visibility and set a `_paneVisible` flag in `storage.local` for `devtools.js` to check — this added fragile inter-page state synchronization.
-
-**Current behavior**: Extraction always runs on every selection change. `pane.js` gates only the UI update with `getClientRects()` — the DOM is updated silently even when hidden, but has no visual impact.
-
-**To truly fix**: The Firefox WebExtensions API lacks a way to query whether a specific sidebar tab is active. A reliable solution would require Firefox to expose an `isSelected` property or `onSelected`/`onDeselected` events on `ExtensionSidebarPane`.
+Extraction uses `ExtensionSidebarPane.onShown`/`onHidden` events (supported since Firefox 57) to gate on the active tab. When the "innerText" tab is hidden, `$0.innerText` is never evaluated — avoiding the layout-triggering style recalc on the inspected page. A timestamped `console.log` is emitted in the Browser Console whenever extraction does run.
 
 ## How it works
 
-- `devtools.js` listens for node selection changes (`onSelectionChanged`), evaluates `$0.innerText` in the inspected page, and stores the result in `storage.local`.
+- `devtools.js` listens for node selection changes (`onSelectionChanged`). When the "innerText" tab is active (`paneActive === true`), it evaluates `$0.innerText` in the inspected page and stores the result in `storage.local`. When hidden, extraction is skipped entirely.
 - `pane.js` reads from `storage.local` and updates the display. It only updates the UI when the pane tab is actually visible (detected via `getClientRects()`).
 - The **Copy** button does a fresh `eval()` to get the absolute latest text (handles DOM mutations since selection).
+- Open the **Browser Console** (`Ctrl+Shift+J`) to see debug output: `YYYY-MM-DD HH:mm:ss [Copy innerText] selection changed, extracting innerText`
 
 ## License
 
