@@ -8,6 +8,8 @@ Adds an **"innerText"** tab to the Inspector sidebar showing the rendered text o
 2. Click **This Firefox** → **Load Temporary Add-on...**
 3. Select `extension/manifest.json`
 
+Or use Firefox's Extension page: [https://addons.mozilla.org/en-US/firefox/addon/copy-dom-innertext/](https://addons.mozilla.org/en-US/firefox/addon/copy-dom-innertext/)
+
 ## Usage
 
 1. Open DevTools (F12) → **Inspector** tab
